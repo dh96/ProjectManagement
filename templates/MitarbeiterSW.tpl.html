@@ -1,0 +1,27 @@
+<!-- Template -->
+<!-- Contentbereich -->
+
+
+<table>
+    <tr>
+         <th>Vorname</th>
+         <th>Name</th>
+         <th>Abteilung</th>
+   </tr>
+    @var entry_a;@
+    @var loop_i;@
+    @for loop_i = 0; loop_i < context.length; loop_i++@
+       @entry_a = context[loop_i];@
+       <tr id="#entry_a['id']#">
+          <td>#entry_a['Vorname']#</td>  
+          <td>#entry_a['Name']#</td>   
+          <td>#entry_a['Abteilung']#</td>                     
+       </tr>
+    @endfor@     
+ </table>  
+ <footer id="ButtonArea" class="clButtonArea">
+   <button id="MitarbeiterSW.Add">hinzufügen</button>
+   <button id="MitarbeiterSW.Edit">bearbeiten</button>
+   <button id="MitarbeiterSW.Delete">löschen</button>  
+ </footer>
+ <!-- EOF -->

@@ -1,0 +1,42 @@
+<!-- Template -->
+<form id="idForm">
+    <label for="Beschreibung">Beschreibung</label>
+    <input type="text" id="Beschreibung" value="#context[0]['Data']['Beschreibung']#"/>
+    <label for="Mitarbeiter">Bearbeiter</label>
+    <select type="text" class="Form" id="Mitarbeiter">
+      @var rows_o = context[0]['reference']['Mitarbeiter'];@
+      @for var key_s in rows_o@
+        <option>#rows_o[key_s]['Name']#</option>
+      @endfor@
+    </select>
+    <label >Datum der Erfassung</label>
+    <input type="date" id="Datum" value="#context[0]['Data']['Datum']#"/>
+    <label for="Komponente">Komponente</label>
+    <select type="text" class="Form" id="Komponente">
+      @var rows_o = context[0]['reference']['Komponenten'];@
+      @for var key_s in rows_o@
+        <option>#rows_o[key_s]['Komponente']#</option>
+      @endfor@
+    </select>
+    <label for="Projekt">Projekt</label>
+    <select type="text" class="Form" id="Projekt">
+      @var rows_o = context[0]['reference']['Projekt'];@
+      @for var key_s in rows_o@
+        <option>#rows_o[key_s]['Name']#</option>
+      @endfor@
+    </select>
+    <label for="FehlerKategorie">FehlerKategorie</label>
+    <select type="text" class="Form" id="FehlerKategorie">
+      @var rows_o = context[0]['reference']['KategorieFehler'];@
+      @for var key_s in rows_o@
+        <option>#rows_o[key_s]['Beschreibung']#</option>
+      @endfor@
+    </select>
+    <input type="hidden" id="Status" value="Erkannt"/>
+    <input type="hidden" id="id" value="#context[0]['Data']['id']#"/>
+    <footer class="clButtonArea">
+        <button id="FehlerErkannt.IdBack">Zurück</button>
+        <button type="submit" id="FehlerErkannt.Save">Speichern</button>
+    </footer>
+ </form>
+ <!-- EOF -->

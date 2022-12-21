@@ -1,0 +1,38 @@
+<!-- Template -->
+<!-- Contentbereich -->
+
+
+<table>
+    <tr>
+         <th>Beschreibung</th>
+         <th>Quelle</th>
+
+   </tr>
+    @var entry_a;@
+    @var loop_i;@
+    @var rows_o = context[0]['Data'];@
+      @for var key_s in rows_o@
+         <tr id="#rows_o[key_s]['id']#">
+            <td>#rows_o[key_s]['Beschreibung']#</td>
+            <td>#rows_o[key_s]['src']#</td>
+         </tr>
+      @endfor@
+
+      <!--@var entry_a;@
+      @var loop_i;@
+      @for loop_i = 0; loop_i < context.length; loop_i++@
+         @entry_a = context[loop_i];@
+         <tr id="#entry_a['id']#">
+            <td>#entry_a['Beschreibung']#</td>
+            <td>#entry_a['src']#</td>
+         </tr>
+      @endfor@ -->
+ </table>
+ <footer id="ButtonArea" class="clButtonArea">
+   <button id="KategorieUrsache.Add">hinzufügen</button>
+   <button id="KategorieUrsache.Edit">bearbeiten</button>
+   <button id="KategorieUrsache.Delete">löschen</button>
+   <label for="Angemeldet">Mitarbeiter</label>
+   <input type="text" id="AngemeldeteMitarbeiterRolle" value="#context[0]['Rolle']#" readonly/>
+ </footer>
+ <!-- EOF -->

@@ -1,0 +1,78 @@
+#tableArea {
+    font-family: "Arial", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border-spacing: 1px;
+    width: 100%;
+}
+
+#tableAreaEmpWeek {
+    font-family: "Arial", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border-spacing: 1px;
+    width: 100%;
+}
+
+#tableArea td, #customers th {
+    border: 1px solid #eeeeee;
+    padding: 8px;
+}
+
+#tableArea tr:nth-child(even){background-color: #eeeeee;}
+
+#tableArea tr:hover {background-color: #ddd;}
+
+#tableArea th {
+    border: 1px solid #eeeeee;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #341f97;
+    color: white;
+    width: 100%;
+}
+h1 {
+    font-family: "Arial", Arial, Helvetica, sans-serif;
+}
+
+select {
+    border-radius: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 200px;
+}
+
+input {
+    border-radius: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 200px;
+
+}
+
+button {
+    
+    border-radius: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 200px;
+}
+
+label {
+    display: inline-block;
+    width: 200px;
+    text-align: right;
+    border-block-end-style: outset;
+
+}
+
+
+
+.selected {
+    background-color: lightgreen;
+}

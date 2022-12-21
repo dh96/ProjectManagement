@@ -1,0 +1,47 @@
+{
+   "60": {
+      "Status": "Behoben", 
+      "Zustand": "", 
+      "Mitarbeiter": "", 
+      "KategorieFehlerUrsache": "Ursache", 
+      "Projekt": "Neues", 
+      "Datum": "2019-01-24", 
+      "Beschreibung": "FEHLER2", 
+      "FehlerKategorie": "Fehler1", 
+      "MitarbeiterDerFehlerBehobenHat": "", 
+      "BeschreibungFehlerUrsache": "IDK", 
+      "Komponente": "Komponente1", 
+      "id": 60, 
+      "DatumDerBeseitigung": "8888-04-09"
+   }, 
+   "61": {
+      "Status": "Behoben", 
+      "Zustand": "", 
+      "Mitarbeiter": "", 
+      "KategorieFehlerUrsache": "Ursache", 
+      "Projekt": "Neues", 
+      "Datum": "2019-01-24", 
+      "Beschreibung": "FEHLER3", 
+      "FehlerKategorie": "Fehler1", 
+      "MitarbeiterDerFehlerBehobenHat": "", 
+      "BeschreibungFehlerUrsache": "URSACHE2", 
+      "Komponente": "Komponente1", 
+      "id": 61, 
+      "DatumDerBeseitigung": "1995-03-04"
+   }, 
+   "59": {
+      "Status": "Erkannt", 
+      "Zustand": "erfasst", 
+      "Mitarbeiter": "", 
+      "KategorieFehlerUrsache": "", 
+      "Projekt": "Neues", 
+      "Datum": "2019-01-24", 
+      "Beschreibung": "FEHLER1", 
+      "FehlerKategorie": "Fehler1", 
+      "MitarbeiterDerFehlerBehobenHat": "", 
+      "BeschreibungFehlerUrsache": "", 
+      "Komponente": "Komponente1", 
+      "id": 59, 
+      "DatumDerBeseitigung": ""
+   }
+}

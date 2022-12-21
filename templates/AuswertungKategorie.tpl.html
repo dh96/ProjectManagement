@@ -1,0 +1,25 @@
+<!-- Template -->
+<!-- Contentbereich -->
+<table>
+    <tr>
+        <th>Beschreibung des Fehlers</th>
+        <th>Kategorie Fehler</th>
+        <th>Fehler Status</th>
+    </tr>
+      @var rows_o = context[0]['Data'];@
+      @var rows_p = context[0]['Zeitdifferenz'];@
+      @for var key_s in rows_o@
+
+         <tr id="">
+            <td>#rows_o[key_s]['Beschreibung']#</td>
+            <td>#rows_o[key_s]['FehlerKategorie']#</td>
+            <td>#rows_o[key_s]['Status']#</td>
+         </tr>
+      @endfor@
+ </table>
+ <footer class="clButtonArea">
+   <label for="Angemeldet">Mitarbeiter</label>
+   <input type="text" id="AngemeldeteMitarbeiterRolle" value="#context[0]['Rolle']#" readonly/>
+ </footer>
+
+ <!-- EOF -->

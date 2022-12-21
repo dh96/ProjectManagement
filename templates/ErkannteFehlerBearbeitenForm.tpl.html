@@ -1,0 +1,27 @@
+<!-- Template -->
+<form id="idForm">
+    <label for="BeschreibungFehlerUrsache">Beschreibung der Fehlerursache</label>
+    <input type="text" id="BeschreibungFehlerUrsache" value="#context[0]['Data']['BeschreibungFehlerUrsache']#"/>
+    <label for="MitarbeiterDerFehlerBehobenHat">Bearbeiter</label>
+    <select type="text" class="Form" id="MitarbeiterDerFehlerBehobenHat">
+      @var rows_o = context[0]['reference']['Mitarbeiter'];@
+      @for var key_s in rows_o@
+        <option>#rows_o[key_s]['Name']#</option>
+      @endfor@
+    </select>
+    <label >Datum der Beseitigung</label>
+    <input type="date" id="DatumDerBeseitigung" value="#context[0]['Data']['DatumDerBeseitigung']#"/>
+    <label for="KategorieFehlerUrsache">Kategorie Fehlerursache</label>
+    <select type="text" class="Form" id="KategorieFehlerUrsache">
+      @var rows_o = context[0]['reference']['KategorieFehlerUrsache'];@
+      @for var key_s in rows_o@
+        <option>#rows_o[key_s]['Beschreibung']#</option>
+      @endfor@
+    </select>
+    <input type="hidden" id="id" value="#context[0]['Data']['id']#"/>
+    <footer class="clButtonArea">
+        <button id="FehlerErkannt.IdBack">Zurück</button>
+        <button type="submit" id="FehlerErkannt.Save">Speichern</button>
+    </footer>
+ </form>
+ <!-- EOF -->

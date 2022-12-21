@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Doku</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p><strong>WEB Praktikum</strong></p>
+<p><strong>Termin 3</strong></p>
+<p><strong>Von <em>Marvin Waligora</em> und <em>Dennis Halter</em> - Gruppe <em>C</em> zum 22.01.2019</strong></p>
+<h1 id="einleitung">1. Einleitung:</h1>
+<h2 id="aufgabe-der-anwendung">Aufgabe der Anwendung</h2>
+<ul>
+<li>Die Aufgabe der entwickelten Anwendung “Bug-Tracker” ist es Fehler in Projekten zu erkennen und zu beseitigen. Ein Mitarbeiter der Qualitätssicherung (QS) ist in der Lage Fehler zu erkenne und zu Protokollieren. Im weiteren Verlauf der Fehleranalyse kann der Fehler von einem Softwareentwickler (SW) bearbeitet und fertiggestellt werden. Der “Bug-Tracker” ist als Client/Server Anwendung mit dem REST Archtiekturprinzip realisiert. Um in die jeweilige Rolle des Mitarbeiter zu schlüpfen müssen sich die Mitarbeiter vor jeder Benutzung vom “Bug-Tracker” anmelden.</li>
+</ul>
+<h3 id="zustandsdiagramm">Zustandsdiagramm</h3>
+<p><img src="Web3dia.png" /></p>
+<h2 id="berücksichtigter-funktionsumfang">Berücksichtigter Funktionsumfang</h2>
+<ul>
+<li>Anmeldung als QS-Mitarbeiter oder Softwareentickler
+<ul>
+<li>Rolle QS: Protokollieren von Fehlern</li>
+<li>Rolle SW: Bearbeiten von Fehlern</li>
+</ul></li>
+<li>Protokollieren von Fehlern
+<ul>
+<li>Beschreibung des Fehlers</li>
+<li>QS-Mitarbeiter der Fehler erfasst hat</li>
+<li>das Datum der Erfassung</li>
+<li>die fehlerhafte Komponente</li>
+<li>Kategorie des Fehlers (Fehler/Ursache)</li>
+</ul></li>
+<li>Bearbeiten von Fehlern
+<ul>
+<li>der Bearbeitende Softwareentwickler wird angegeben</li>
+<li>das Datum der Beseitigung erfasst</li>
+<li>die Ursache des Fehlers wird einer Kategorie zugeordnet</li>
+</ul></li>
+<li>Pflege von Kategorien
+<ul>
+<li>Einteilung nach Fehlerkategorie und Fehlerursache</li>
+</ul></li>
+<li>Pflege von Komponenten
+<ul>
+<li>Komponenten mit zugehörigkeit eines Projekts anlegen, löschen und ändern</li>
+</ul></li>
+<li>Auswertung von Fehlerdaten
+<ul>
+<li>nach Projekt/Komponente/Status</li>
+<li>nach Projekt/Komponente/Status/Zeitdifferenz<br />
+</li>
+<li>nach Kategorie/Status</li>
+</ul></li>
+</ul>
+<h1 id="implementierung-des-servers">2. Implementierung des Servers:</h1>
+<h2 id="rest-interface">REST-Interface</h2>
+<ul>
+<li>Hier arbeiten wir mit dem REST-Interface. Dieser arbeitet Zustandslos mit einer Einheitlichen Schnittstelle. Einzelne Schichten können jeweils nur die direkt angrenzende Schicht sehen. Hauptsächlich arbeiten wir mit den folgenden Methoden:
+<ul>
+<li>GET - fordert Daten vom Server an</li>
+<li>POST - übermittelt Daten an den Server</li>
+<li>PUT - ändert bestehende Daten auf dem Server</li>
+<li>DELETE - löscht bestehende Daten auf dem Server</li>
+</ul></li>
+</ul>
+<h2 id="beschreibung-des-servers">Beschreibung des Servers</h2>
+<ul>
+<li>Login
+<ul>
+<li>GET/login
+<ul>
+<li>curl http://localhost:8080/login</li>
+</ul></li>
+<li>POST/login/+Daten
+<ul>
+<li>curl –request POST –data “Name=AdminSW&amp;Passwort=AdminSW” http://localhost:8080/login/</li>
+</ul></li>
+</ul></li>
+<li>Logout
+<ul>
+<li>GET/login/“logout”
+<ul>
+<li>curl http://localhost:8080/login/“logout”</li>
+</ul></li>
+</ul></li>
+<li>Projekt
+<ul>
+<li>GET /projekt/
+<ul>
+<li>curl http://localhost:8080/projekt</li>
+</ul></li>
+<li>GET /projekt/:projekt-id
+<ul>
+<li>curl http://localhost:8080/projekt/60</li>
+</ul></li>
+<li>POST /projekt/ + Daten
+<ul>
+<li>curl –request POST –data “id=61&amp;Name=qwerty” http://localhost:8080/projekt/</li>
+</ul></li>
+<li>PUT /projekt/:id + Daten
+<ul>
+<li>curl –request PUT –data “id=52&amp;Name=xyz” http://localhost:8080/projekt/</li>
+</ul></li>
+<li>DELETE /projekt/:id
+<ul>
+<li>curl –request DELETE http://localhost:8080/projekt/63</li>
+</ul></li>
+</ul></li>
+<li>Komponenten
+<ul>
+<li>GET /projektkomponenten/:projekt-id
+<ul>
+<li>curl http://localhost:8080/projektkomponenten</li>
+</ul></li>
+<li>GET /komponente/
+<ul>
+<li>curl http://localhost:8080/komponente</li>
+</ul></li>
+<li>GET /komponente/:komponente-id
+<ul>
+<li>curl http://localhost:8080/komponente/1</li>
+</ul></li>
+<li>POST /komponente/:projekt-id + Daten
+<ul>
+<li>curl –request POST –data “id=2&amp;Projekt=aaaaaaaaaaaaaa1212&amp;Komponente=1234” http://localhost:8080/komponente/</li>
+</ul></li>
+<li>PUT /komponente/:komponente-id + Daten
+<ul>
+<li>curl –request PUT –data “id=1&amp;Projekt=aaaaaaaaaaaaaa1212&amp;Komponente=1234” http://localhost:8080/komponente/</li>
+</ul></li>
+<li>DELETE /komponente/:komponente-id
+<ul>
+<li>curl –request DELETE http://localhost:8080/komponente/17</li>
+</ul></li>
+</ul></li>
+<li>MitarbeiterQS
+<ul>
+<li>GET /qsmitarbeiter/
+<ul>
+<li>curl http://localhost:8080/qsmitarbeiter</li>
+</ul></li>
+<li>GET /qsmitarbeiter/:qsmitarbeiter-id
+<ul>
+<li>curl http://localhost:8080/qsmitarbeiter/9</li>
+</ul></li>
+<li>POST /qsmitarbeiter/ + Daten
+<ul>
+<li>curl –request POST –data “id=11&amp;Name=cdef&amp;Vorname=123456&amp;Abteilung=QS” http://localhost:8080/qsmitarbeiter/</li>
+</ul></li>
+<li>PUT /qsmitarbeiter/:qsmitarbeiter-id + Daten
+<ul>
+<li>curl –request PUT –data “id=9&amp;Name=cd&amp;Vorname=1234&amp;Abteilung=QS” http://localhost:8080/qsmitarbeiter/</li>
+</ul></li>
+<li>DELETE /qsmitarbeiter/:qsmitarbeiter-id
+<ul>
+<li>curl –request DELETE http://localhost:8080/qsmitarbeiter/21</li>
+</ul></li>
+</ul></li>
+<li>Swentwickler
+<ul>
+<li>GET /swentwickler/
+<ul>
+<li>curl http://localhost:8080/swentwickler</li>
+</ul></li>
+<li>GET /swentwickler/:swentwickler-id
+<ul>
+<li>curl http://localhost:8080/swentwickler/24</li>
+</ul></li>
+<li>POST /swentwickler/ + Daten
+<ul>
+<li>curl –request POST –data “id=25&amp;Name=cdef&amp;Vorname=123456&amp;Abteilung=SW” http://localhost:8080/swentwickler/</li>
+</ul></li>
+<li>PUT /swentwickler/:swentwickler-id + Daten
+<ul>
+<li>curl –request PUT –data “id=24&amp;Name=cd&amp;Vorname=1234&amp;Abteilung=SW” http://localhost:8080/swentwickler/</li>
+</ul></li>
+<li>DELETE /swentwickler/:swentwickler-id
+<ul>
+<li>curl –request DELETE http://localhost:8080/swentwickler/25</li>
+</ul></li>
+</ul></li>
+<li>KategorieFehler
+<ul>
+<li>GET /katfehler/
+<ul>
+<li>curl http://localhost:8080/katfehler</li>
+</ul></li>
+<li>GET /katfehler/:katfehler-id
+<ul>
+<li>curl http://localhost:8080/katfehler/17</li>
+</ul></li>
+<li>POST /katfehler/ + Daten
+<ul>
+<li>curl –request POST –data “id=11&amp;Beschreibung=cdef&amp;src=ab” http://localhost:8080/katfehler/</li>
+</ul></li>
+<li>PUT /katfehler/:katfehler-id + Daten
+<ul>
+<li>curl –request PUT –data “id=17&amp;Beschreibung=1234&amp;src=ab” http://localhost:8080/katfehler/</li>
+</ul></li>
+<li>DELETE /katfehler/:katfehler-id
+<ul>
+<li>curl –request DELETE http://localhost:8080/katfehler/28</li>
+</ul></li>
+</ul></li>
+<li>KategorieUrsache
+<ul>
+<li>GET /katursache/
+<ul>
+<li>curl http://localhost:8080/katursache</li>
+</ul></li>
+<li>GET /katursache/:katursache-id
+<ul>
+<li>curl http://localhost:8080/katursache/22</li>
+</ul></li>
+<li>POST /katursache/ + Daten
+<ul>
+<li>curl –request POST –data “id=24&amp;Beschreibung=cdefgh&amp;src=abcd” http://localhost:8080/katursache/</li>
+</ul></li>
+<li>PUT /katursache/:katursache-id + Daten
+<ul>
+<li>curl –request PUT –data “id=22&amp;Beschreibung=1234&amp;src=ab” http://localhost:8080/katursache/</li>
+</ul></li>
+<li>DELETE /katursache/:katursache-id
+<ul>
+<li>curl –request DELETE http://localhost:8080/katursache/27</li>
+</ul></li>
+</ul></li>
+<li>Fehler
+<ul>
+<li>GET /fehler/
+<ul>
+<li>curl http://localhost:8080/fehler</li>
+</ul></li>
+<li>GET /fehler/?type=erkannt
+<ul>
+<li>curl http://localhost:8080/fehler/“type=erkannt”</li>
+</ul></li>
+<li>GET /fehler/?type=behoben
+<ul>
+<li>curl http://localhost:8080/fehler/“type=behoben”</li>
+</ul></li>
+<li>GET /fehler/:fehler-id
+<ul>
+<li>curl http://localhost:8080/fehler/33</li>
+</ul></li>
+<li>POST /fehler/ + Daten
+<ul>
+<li>curl –request POST –data “id=37&amp;Beschreibung=1234&amp;Mitarbeiter=ab&amp;Datum=sdas&amp;Komponente=werter&amp;Projekt=qwert&amp;FehlerKategorie=qweqwe&amp;Status=behoben&amp;BeschreibungFehlerUrsache=asdfg&amp;MitarbeiterDerFehlerBehobenHat=yxccv&amp;DatumDerBeseitigung=lkjhg&amp;KategorieFehlerUrsache=mnbv” http://localhost:8080/fehler/</li>
+</ul></li>
+<li>PUT /fehler/:fehler-id + Daten
+<ul>
+<li>curl –request PUT –data “id=33&amp;Beschreibung=1234&amp;Mitarbeiter=ab&amp;Datum=sdas&amp;Komponente=werter&amp;Projekt=qwert&amp;FehlerKategorie=qweqwe&amp;Status=behoben&amp;BeschreibungFehlerUrsache=asdfg&amp;MitarbeiterDerFehlerBehobenHat=yxccv&amp;DatumDerBeseitigung=lkjhg&amp;KategorieFehlerUrsache=mnbv” http://localhost:8080/fehler/</li>
+</ul></li>
+<li>PUT /fehler/?type=behoben&amp;Zustand=erfolgreich
+<ul>
+<li>curl –request PUT –data “id=33&amp;Beschreibung=”“&amp;Mitarbeiter=”“&amp;Datum=”“&amp;Komponente=”“&amp;Projekt=”“&amp;FehlerKategorie=”“&amp;Status=erkannt&amp;BeschreibungFehlerUrsache=”“&amp;MitarbeiterDerFehlerBehobenHat=”“&amp;DatumDerBeseitigung=”“&amp;KategorieFehlerUrsache=”“&amp;Zustand=erfolgreich” http://localhost:8080/fehler/</li>
+</ul></li>
+<li>PUT /fehler/?type=behoben&amp;Zustand=fehlgeschlagen
+<ul>
+<li>curl –request PUT –data “id=33&amp;Beschreibung=”“&amp;Mitarbeiter=”“&amp;Datum=”“&amp;Komponente=”“&amp;Projekt=”“&amp;FehlerKategorie=”“&amp;Status=erkannt&amp;BeschreibungFehlerUrsache=”“&amp;MitarbeiterDerFehlerBehobenHat=”“&amp;DatumDerBeseitigung=”“&amp;KategorieFehlerUrsache=”“&amp;Zustand=fehlgeschlagen” http://localhost:8080/fehler/</li>
+</ul></li>
+</ul></li>
+<li>Auswertung Projekte
+<ul>
+<li>GET /prolist/
+<ul>
+<li>curl http://localhost:8080/prolist</li>
+</ul></li>
+</ul></li>
+<li>Auswertung Kategorien
+<ul>
+<li>GET /katlist/
+<ul>
+<li>curl http://localhost:8080/katlist</li>
+</ul></li>
+</ul></li>
+<li>Templates
+<ul>
+<li>GET /templates/
+<ul>
+<li>curl http://localhost:8080/templates</li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="module">3. Module</h1>
+<h2 id="bestandteile-der-module">Bestandteile der Module</h2>
+<h3 id="python">Python</h3>
+<ul>
+<li>Application.py
+<ul>
+<li>Hier werden die Module für die Applikation bereitgestellt
+<ul>
+<li>Login_cl
+<ul>
+<li>Verwaltet das An und Abmelden von Mitarbeitern</li>
+</ul></li>
+<li>Application_cl
+<ul>
+<li>Stellt Funktionalität für die Listen und detailsicht zur Verfügung</li>
+</ul></li>
+<li>Projects_cl
+<ul>
+<li>Verwaltet das erzeugen, bearbeiten und löschen von Projekten</li>
+</ul></li>
+<li>Komponente_cl
+<ul>
+<li>Verwaltet das erzeugen, bearbeiten und löschen von komponenten</li>
+</ul></li>
+<li>ProjektKomponenten_cl
+<ul>
+<li>Liste mit Verfügbaren Projekten</li>
+</ul></li>
+<li>Mitarbeiter_cl
+<ul>
+<li>Liste von aller Mitarbeiter wird angezeigt</li>
+</ul></li>
+<li>MitarbeiterSW_cl
+<ul>
+<li>Verwaltet das erzeugen, bearbeiten und löschen von Fehler SW-Mittarbeitern</li>
+</ul></li>
+<li>MitarbeiterQS_cl
+<ul>
+<li>Verwaltet das erzeugen, bearbeiten und löschen von QS-Mitarbeitern</li>
+</ul></li>
+<li>Categories_cl
+<ul>
+<li>Liste von aller Kategorien</li>
+</ul></li>
+<li>KategorieFehler_cl
+<ul>
+<li>Verwaltet das erzeugen, bearbeiten und löschen von Fehlerkategorien</li>
+</ul></li>
+<li>KategorieUrsache_cl
+<ul>
+<li>Verwaltet das erzeugen, bearbeiten und löschen von Ursachenkategorien</li>
+</ul></li>
+<li>FehlerErkannt_cl
+<ul>
+<li>Verwaltet das erzeugen, bearbeiten und löschen von Fehlern</li>
+</ul></li>
+<li>AuswertungPro_cl
+<ul>
+<li>Fehler nach Projekt sortiert</li>
+</ul></li>
+<li>AuswertungKat_cl
+<ul>
+<li>Fehler nach Kategorie sortiert</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="öffentliche-methoden">Öffentliche Methoden</h3>
+<h3 id="python-1">Python</h3>
+<ul>
+<li>Login_cl
+<ul>
+<li>GET(self, id)</li>
+<li>POST(self, data_opl)</li>
+</ul></li>
+<li>Application_cl<br />
+</li>
+<li>Projects_cl
+<ul>
+<li>GET(self, id)</li>
+<li>POST(self, data_opl)</li>
+<li>PUT(self, data_opl)</li>
+<li>DELETE(self, id)</li>
+</ul></li>
+<li>Komponente_cl
+<ul>
+<li>GET(self, id)</li>
+<li>POST(self, data_opl)</li>
+<li>PUT(self, data_opl)</li>
+<li>DELETE(self, id)</li>
+</ul></li>
+<li>ProjektKomponenten_cl
+<ul>
+<li>GET(self, id)</li>
+</ul></li>
+<li>Mitarbeiter_cl
+<ul>
+<li>GET(self, id)</li>
+</ul></li>
+<li>MitarbeiterSW_cl
+<ul>
+<li>GET(self, id)</li>
+<li>POST(self, data_opl)</li>
+<li>PUT(self, data_opl)</li>
+<li>DELETE(self, id)</li>
+</ul></li>
+<li>MitarbeiterQS_cl
+<ul>
+<li>GET(self, id)</li>
+<li>POST(self, data_opl)</li>
+<li>PUT(self, data_opl)</li>
+<li>DELETE(self, id)</li>
+</ul></li>
+<li>Kategorie_cl
+<ul>
+<li>GET(self, id)</li>
+</ul></li>
+<li>KategorieFehler_cl
+<ul>
+<li>GET(self, id)</li>
+<li>POST(self, data_opl)</li>
+<li>PUT(self, data_opl)</li>
+<li>DELETE(self, id)</li>
+</ul></li>
+<li>KategorieUrsache_cl
+<ul>
+<li>GET(self, id)</li>
+<li>POST(self, data_opl)</li>
+<li>PUT(self, data_opl)</li>
+<li>DELETE(self, id)</li>
+</ul></li>
+<li>FehlerErkannt_cl
+<ul>
+<li>GET(self, id)</li>
+<li>POST(self, data_opl)</li>
+<li>PUT(self, data_opl)</li>
+<li>DELETE(self, id)</li>
+</ul></li>
+<li>AuswertungPro_cl
+<ul>
+<li>GET(self, id)</li>
+</ul></li>
+<li>AuswertungKat_cl
+<ul>
+<li>GET(self, id)</li>
+</ul></li>
+</ul>
+<h2 id="zusammenwirken-der-komponenten">Zusammenwirken der Komponenten</h2>
+<h3 id="python-2">Python</h3>
+<ul>
+<li>Login_cl(object):
+<ul>
+<li>Liest Logindaten aus Datenbank</li>
+<li>Übergibt Logindaten an Datenbank zum An und Abmelden eines Nutzers</li>
+</ul></li>
+<li>Projects_cl(object):
+<ul>
+<li>Erhält Projektdaten vom Client</li>
+<li>Liest Projektdaten aus Datenbank</li>
+<li>Übergibt Projektdaten an Datenbank zum Erzeugen, Löschen und Aktualisieren</li>
+</ul></li>
+<li>Komponente_cl(object):
+<ul>
+<li>Erhält Komponentendaten vom Client</li>
+<li>Liest Komponentendaten aus Datenbank</li>
+<li>Übergibt Komponentendaten an Datenbank zum Erzeugen, Löschen und Aktualisieren</li>
+</ul></li>
+<li>ProjektKomponenten_cl(object):
+<ul>
+<li>Erhält ProjektKomponentendaten vom Client<br />
+</li>
+<li>Übergibt ProjektKomponentendaten an Datenbank zum Filtern nach Projekten</li>
+</ul></li>
+<li>Mitarbeiter_cl(object):
+<ul>
+<li>Erhält sämtliche Mitarbeiterdaten aus Datenbank um Liste von Mitarbeitern anzuzeigen<br />
+</li>
+</ul></li>
+<li>MitarbeiterSW_cl(object):
+<ul>
+<li>Erhält MitarbeiterSWdaten vom Client</li>
+<li>Liest mitarbeiterSWdaten aus Datenbank zum Erzeugen, Löschen und Aktualisieren</li>
+</ul></li>
+<li>MitarbeiterQS_cl(object):
+<ul>
+<li>Erhält MitarbeiterQSdaten vom Client</li>
+<li>Liest mitarbeiterQSdaten aus Datenbank zum Erzeugen, Löschen und Aktualisieren</li>
+</ul></li>
+<li>Kategorie_cl(object):
+<ul>
+<li>Erhält Kategoriedaten um Liste zu laden</li>
+</ul></li>
+<li>KategorieFehler_cl(object):
+<ul>
+<li>Erhält KategorieFehlerdaten von Client</li>
+<li>Liest KategorieFehlerdaten aus Datenbank zum Erzeugen, Löschen und Aktualisieren</li>
+</ul></li>
+<li>KategorieUrsache_cl(object):
+<ul>
+<li>Erhält KategorieUrsachedaten vom Client</li>
+<li>Liest KategorieUrsachedaten aus Datenbank zum Erzeugen, Löschen und Aktualisieren</li>
+</ul></li>
+<li>FehlerErkannt_cl(object):
+<ul>
+<li>Erhält Fehlerdaten vom Client</li>
+<li>Liest Fehlerdaten aus zum Erzeugen, Löschen und Aktualisieren</li>
+</ul></li>
+<li>AuswertungPro_cl(object):
+<ul>
+<li>Erhält gefilterte Fehlerdaten nach Projekt</li>
+</ul></li>
+<li>AuswertungProZeit_cl(object):
+<ul>
+<li>Gefilterte Fehlerdaten nach Projekt, Komponente und Zeitdifferenz</li>
+</ul></li>
+<li>AuswertungKat_cl(object):
+<ul>
+<li>Erhält gefilterte Fehlerdaten nach Kategorie</li>
+</ul></li>
+</ul>
+<h2 id="database.py">Database.py</h2>
+<h3 id="python-3">Python</h3>
+<ul>
+<li>Hier werden die Verwaltung von folgenden Daten geregelt
+<ul>
+<li>fehler</li>
+<li>katfehler</li>
+<li>katursache</li>
+<li>komponente</li>
+<li>projekt</li>
+<li>mitarbeiter</li>
+<li>qsmitarbeiter</li>
+<li>swentwickler</li>
+</ul></li>
+<li>Klassen
+<ul>
+<li>Database_cl</li>
+</ul></li>
+</ul>
+<h3 id="öffentliche-methoden-1">Öffentliche Methoden</h3>
+<ul>
+<li>Database_cl
+<ul>
+<li>readData(self, file_name):</li>
+<li>saveData(self, file_name, data):</li>
+<li>GetMaxID(self, file_name):</li>
+<li>UpdateMaxID(self, file_name):</li>
+<li>ReadProjectData(self):</li>
+<li>AddProject(self, data):</li>
+<li>GetProjectMaxId(self):</li>
+<li>UpdateProject(self, id_s, data):</li>
+<li>DeleteProject(self, id_s):</li>
+<li>GetProjectData(self, id_s):</li>
+<li>GetDefaultProjectData(self):</li>
+<li>ReadComponentData(self):</li>
+<li>AddComponent(self, data):</li>
+<li>GetComponentMaxId(self):</li>
+<li>UpdateComponent(self, id_s, data):</li>
+<li>DeleteComponent(self, id_s):</li>
+<li>GetComponentData(self, id_s):</li>
+<li>GetDefaultComponentData(self):</li>
+<li>ReadEmployeeSWData(self):</li>
+<li>AddEmployeeSW(self, data):</li>
+<li>GetEmployeeSWMaxId(self):</li>
+<li>UpdateEmployeeSW (self, id_s, data):</li>
+<li>DeleteEmployeeSW(self, id_s):</li>
+<li>GetEmployeeSWData(self, id_s):</li>
+<li>GetDefaultEmployeeSWData(self):</li>
+<li>ReadEmployeeQSData(self):</li>
+<li>AddEmployeeQS(self, data):</li>
+<li>GetEmployeeQSMaxId(self):</li>
+<li>UpdateEmployeeQS (self, id_s, data):</li>
+<li>DeleteEmployeeQS(self, id_s):</li>
+<li>GetEmployeeQSData(self, id_s):</li>
+<li>GetDefaultEmployeeQSData(self):</li>
+<li>ReadCatErrorData(self):</li>
+<li>AddCatError(self, data):</li>
+<li>GetCatErrorMaxId(self):</li>
+<li>UpdateCatError (self, id_s, data):</li>
+<li>DeleteCatError(self, id_s):</li>
+<li>GetCatErrorData(self, id_s):</li>
+<li>GetDefaultCatErrorData(self):</li>
+<li>ReadCatCauseData(self):</li>
+<li>AddCatCause(self, data):</li>
+<li>GetCatCauseMaxId(self):</li>
+<li>UpdateCatCause (self, id_s, data):</li>
+<li>DeleteCatCause(self, id_s):</li>
+<li>GetCatCauseData(self, id_s):</li>
+<li>GetDefaultCatCauseData(self):</li>
+<li>ReadErrorData(self):</li>
+<li>AddError(self, data):</li>
+<li>GetErrorMaxId(self):</li>
+<li>UpdateError (self, id_s, data):</li>
+<li>DeleteError(self, id_s):</li>
+<li>GetErrorData(self, id_s):</li>
+<li>GetDefaultErrorData(self):</li>
+</ul></li>
+</ul>
+<h3 id="zusammenwirken">Zusammenwirken</h3>
+<ul>
+<li>Fehler
+<ul>
+<li>QS Mitarbeiter kann Fehler erkennen</li>
+<li>Fehler wird in JSON datei angelegt</li>
+<li>Fehler kann von SWEntwicker behoben werden</li>
+</ul></li>
+<li>Kategorie
+<ul>
+<li>Auflistung der vorhandenen Kategorien</li>
+</ul></li>
+<li>Katfehler
+<ul>
+<li>Es können fehler pro Kategorie angelegt, bearbeitet und gelöscht werden<br />
+</li>
+</ul></li>
+<li>Katursache
+<ul>
+<li>Es können Ursachen pro Kategorie angelegt, bearbeitet und gelöscht werden</li>
+</ul></li>
+<li>Projektkomponente
+<ul>
+<li>liefert komponenten nach zugeordnetem Projekt</li>
+</ul></li>
+<li>Komponente
+<ul>
+<li>Komponenten können Angelegt, bearbeitet und gelöscht werden</li>
+<li>Sind im JSON Format hinterlegt</li>
+<li>Sind einem Projekt zugeordnet</li>
+</ul></li>
+<li>Projekt
+<ul>
+<li>Projekte können Angelegt, bearbeitet und gelöscht werden</li>
+<li>Sind im JSON Format hinterlegt</li>
+</ul></li>
+<li>Mitarbeiter
+<ul>
+<li>Liste aller Mitarbeiter</li>
+</ul></li>
+<li>Qsmitarbeiter
+<ul>
+<li>QS-Mitarbeiter können Angelegt, bearbeitet und gelöscht werden</li>
+<li>Sind im JSON Format hinterlegt</li>
+</ul></li>
+<li>Swentwickler
+<ul>
+<li>SW-Entwickler können Angelegt, bearbeitet und gelöscht werden</li>
+<li>Sind im JSON Format hinterlegt</li>
+</ul></li>
+</ul>
+<h1 id="client">4. Client</h1>
+<h2 id="klassen">Klassen</h2>
+<ul>
+<li>Application_cl()</li>
+<li>ListView_cl()<br />
+</li>
+<li>DetailView_cl()</li>
+<li>Sidebar_cl()</li>
+</ul>
+<h2 id="eventservice">Eventservice</h2>
+<ul>
+<li>Mit hilfe des Eventscervices ist es möglich Nachrichten zu versenden ohne einen wirklichen Empfänger zu kennen. Die Implementierung des Eventservices realisiert das publish subscriber Muster. Subscriber melden sich zum Empfang von Nachrichten an, die publisher veröffentlichen die Nachricht. Anschließend werden die Subscriber über ihre Notify Schnittstelle benachrichtigt. Zuletzt beenden die Subscriber den Empfang der Nachrichten.</li>
+</ul>
+<h2 id="templateverarbeitung">TemplateVerarbeitung</h2>
+<ul>
+<li>Templates werden in zwei Varianten verarbeitet. Als Liste sowie als Detail. Alle Daten in Listentemplates über die ID kann dann auf die spezielle Datailansicht verwiesen werden. Im Bug-Tracker werden folgende Templates verwendet:
+<ul>
+<li>sidebar.tpl.html</li>
+<li>Anmeldung.tpl.html</li>
+<li>ProjektForm.tpl.html</li>
+<li>Komponenten.tpl.html</li>
+<li>KomponenteForm.tpl.html</li>
+<li>Mitarbeiter.tpl.html</li>
+<li>MitarbeiterSW.tpl.html</li>
+<li>MitarbeiterSWForm.tpl.html</li>
+<li>MitarbeiterQS.tpl.html</li>
+<li>MitarbeiterQSForm.tpl.html</li>
+<li>Kategorien.tpl.html</li>
+<li>KatFehler.tpl.html</li>
+<li>KatFehlerForm.tpl.html</li>
+<li>KatUrsache.tpl.html</li>
+<li>KatUrsacheForm.tpl.html</li>
+<li>Fehler.tpl.html</li>
+<li>ErkannteFehler.tpl.html</li>
+<li>ErkannteFehlerForm.tpl.html</li>
+<li>ErkannteFehlerBearbeitenForm.tpl.html</li>
+<li>BehobenFehler.tpl.html</li>
+<li>AuswertungKategorie.tpl.html</li>
+<li>AuswertungProjekte.tpl.html</li>
+<li>AuswertungProjekteZeit.tpl.html</li>
+</ul></li>
+</ul>
+<h1 id="validierung">Validierung</h1>
+<p>Bei der Validierung wurden letzte Fehler behoben und bei der letzten Validierung kam es zu keinem Fehler.</p>
+<figure>
+<img src="main.png" alt="main" /><figcaption>main</figcaption>
+</figure>
+<figure>
+<img src="CSSvalid.png" alt="CSS" /><figcaption>CSS</figcaption>
+</figure>
+<figure>
+<img src="CSSvalid1.png" alt="CSS" /><figcaption>CSS</figcaption>
+</figure>
+</body>
+</html>

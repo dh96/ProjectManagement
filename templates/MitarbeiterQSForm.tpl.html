@@ -1,0 +1,16 @@
+<!-- Template -->
+<form id="idForm">
+    <label for="Vorname">Vorname</label>
+    <input type="text" class="Form" id="Vorname" value="#context[0]['Vorname']#" />
+    <label for="Name">Name</label>
+    <input type="text" class="Form" id="Name" value="#context[0]['Name']#" />
+    <input type="hidden" id="Abteilung" value="#context[0]['Abteilung']#" />
+    <input type="hidden" id="id" value="#context[0]['id']#"/>
+    
+    <footer class="clButtonArea">
+        <button id="MitarbeiterQS.IdBack">Zurück</button>
+        <button type="submit" id="MitarbeiterQS.Save">Speichern</button>
+    </footer>
+ </form>
+
+ <!-- EOF -->
